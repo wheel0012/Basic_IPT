@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPT_MK1", "IPT_MK1\IPT_MK1.csproj", "{F665D12C-478F-4229-924B-5A005F0D8391}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basic_IPT", "Basic_IPT\Basic_IPT.csproj", "{DAE83716-A788-497B-9773-3F3962C77321}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F665D12C-478F-4229-924B-5A005F0D8391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F665D12C-478F-4229-924B-5A005F0D8391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F665D12C-478F-4229-924B-5A005F0D8391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F665D12C-478F-4229-924B-5A005F0D8391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE83716-A788-497B-9773-3F3962C77321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE83716-A788-497B-9773-3F3962C77321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE83716-A788-497B-9773-3F3962C77321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE83716-A788-497B-9773-3F3962C77321}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6E12467-CE9F-45EF-9DAE-B31A34CD5920}
+	EndGlobalSection
+EndGlobal
