@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Basic_IPT
 {
-    enum Status {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR}
+    enum Status {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR, EOL, SPACE}
     class Lexer
     {
         private string source_code;
-        private string[] tokens;
+        private Queue<Token> tokens;
         private int tokenStart;
         private int tokenCurrent;
         private int line;
@@ -16,35 +17,49 @@ namespace Basic_IPT
         {
             this.source_code = code;
         }
-        public void GenerateToken()
+        class Token
+        {
+            public Status status;
+            public StringBuilder value;
+            public Token(Status status, StringBuilder value)
+            {
+                this.status = status;
+                this.value = value;
+            }
+        }
+        public void GenerateTokens()
         {
             int index = 0;
             Stack<string> instanceTokenStack = new Stack<string>();
-            while(SeperateToken(ref index, ref instanceTokenStack))
+            Status last = Status.COMMON;
+            while(index<source_code.Length)
             {
                 
+                tokens.Enqueue(SeperateToken(ref index));
             }
         }
-        private bool SeperateToken(ref int index, ref Stack<string> _stack)
+        private Token SeperateToken(ref int index)
         {
-            Status current_status =  Status.COMMON;
-
+            Status current_status =  JudgeFirstStatus(source_code[index]);
+            StringBuilder token_value = new StringBuilder();
             for(;current_status != Status.STRING && source_code[index] != '\r';index++)
             {
 
             }
-            return true;
+            return new Token(current_status, token_value);
         }
-        private Status JudgeFirstStatus(string ch)
+        private Status JudgeFirstStatus(char ch)
         {
-            if (Regex.IsMatch(ch, "[0-9]"))
+            if (char.IsDigit(ch))
             {
                 return Status.NUMBER;
             }
-            else if (Regex.IsMatch(ch, "[A-Za-z]"))
+            else if (char.IsLetter(ch))
             {
                 return Status.IDENTIFIER;
             }
+            else if (ch == '\"') return Status.STRING;
+            else if (ch == ' ') return Status.SPACE;
             else return Status.COMMON;
 
         }

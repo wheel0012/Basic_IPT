@@ -17,3 +17,11 @@ C:\Users\jun\source\repos\IPT_MK1\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.As
 C:\Users\jun\source\repos\IPT_MK1\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfo.cs
 C:\Users\jun\source\repos\IPT_MK1\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.dll
 C:\Users\jun\source\repos\IPT_MK1\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.pdb
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.deps.json
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.dll
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.pdb
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.csprojAssemblyReference.cache
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfoInputs.cache
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfo.cs
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.dll
+C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.pdb
