@@ -1,31 +1,51 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.0": {}
+    ".NETCoreApp,Version=v3.0": {
+      "Basic_IPT/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "compile": {
+          "bin/placeholder/Basic_IPT.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Basic_IPT.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Basic_IPT/1.0.0": {
+      "type": "project",
+      "path": "../Basic_IPT/Basic_IPT.csproj",
+      "msbuildProject": "../Basic_IPT/Basic_IPT.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.0": []
+    ".NETCoreApp,Version=v3.0": [
+      "Basic_IPT >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\JUN\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\LTJ\\.nuget\\packages\\": {},
+    "E:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+      "projectUniqueName": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
       "projectName": "IPT_MK1",
-      "projectPath": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
-      "packagesPath": "C:\\Users\\JUN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\obj\\",
+      "projectPath": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+      "packagesPath": "C:\\Users\\LTJ\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "E:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\JUN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\LTJ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
@@ -36,7 +56,11 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj": {
+              "projectPath": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

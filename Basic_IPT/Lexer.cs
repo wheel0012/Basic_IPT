@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Text;
 
-namespace Basic_IPT
+namespace Basic_IPT.Core
 {
-    enum Status {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR, EOL, SPACE}
-    class Lexer
+    public enum TokenStatus {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR, EOL, SPACE}
+    [Flags]
+    public enum TokenComp {EMPTY = 0x00, LETTER = 0x01, OPERATOR = 0x02, STRING = 0x04, NUMBER=0x08, SPACE = 0x10 }
+    public enum Initiater {INDEX }
+    public class Lexer
     {
         private string source_code;
         private Queue<Token> tokens;
@@ -16,52 +19,61 @@ namespace Basic_IPT
         public Lexer(string code)
         {
             this.source_code = code;
+            tokens = new Queue<Token>();
+            GenerateTokens();
+            
         }
-        class Token
+        public Queue<Token> GetTokens()
         {
-            public Status status;
-            public StringBuilder value;
-            public Token(Status status, StringBuilder value)
+            return this.tokens;
+        }
+
+        public class Token
+        {
+            public readonly TokenComp status;
+            public readonly StringBuilder value;
+            internal Token(TokenComp status, StringBuilder value)
             {
                 this.status = status;
                 this.value = value;
             }
         }
-        public void GenerateTokens()
+        private void GenerateTokens()
         {
             int index = 0;
             Stack<string> instanceTokenStack = new Stack<string>();
-            Status last = Status.COMMON;
-            while(index<source_code.Length)
+            TokenStatus last = TokenStatus.COMMON;
+            while(source_code.Length > index)
             {
-                
                 tokens.Enqueue(SeperateToken(ref index));
             }
+            tokens.Enqueue(new Token(TokenStatus.EOL, string.Empty));
         }
+
         private Token SeperateToken(ref int index)
         {
-            Status current_status =  JudgeFirstStatus(source_code[index]);
+            TokenComp current_status = TokenComp.EMPTY;
             StringBuilder token_value = new StringBuilder();
-            for(;current_status != Status.STRING && source_code[index] != '\r';index++)
-            {
-
-            }
+            for(; )
+                token_value.Append(source_code[index]);
+                current_status |= JudgeFirstStatus(source_code[index++]);
             return new Token(current_status, token_value);
         }
-        private Status JudgeFirstStatus(char ch)
+
+        private TokenComp JudgeFirstStatus(char ch)
         {
             if (char.IsDigit(ch))
             {
-                return Status.NUMBER;
+                return TokenComp.NUMBER;
             }
             else if (char.IsLetter(ch))
             {
-                return Status.IDENTIFIER;
+                return TokenComp.LETTER;
             }
-            else if (ch == '\"') return Status.STRING;
-            else if (ch == ' ') return Status.SPACE;
-            else return Status.COMMON;
-
+            else if (ch == '\"') return TokenComp.STRING;
+            else if (ch == ' ') return TokenComp.SPACE;
+            else if (char.IsSymbol(ch)) return TokenComp.OPERATOR;
+            return TokenComp.EMPTY;
         }
     }
 }

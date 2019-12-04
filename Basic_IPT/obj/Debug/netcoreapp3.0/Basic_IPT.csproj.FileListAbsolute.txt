@@ -25,3 +25,10 @@ C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.
 C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfo.cs
 C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.dll
 C:\Users\JUN\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.pdb
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.deps.json
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.dll
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\bin\Debug\netcoreapp3.0\Basic_IPT.pdb
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfoInputs.cache
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.AssemblyInfo.cs
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.dll
+C:\Users\LTJ\Source\Repos\Basic_IPT\Basic_IPT\obj\Debug\netcoreapp3.0\Basic_IPT.pdb
