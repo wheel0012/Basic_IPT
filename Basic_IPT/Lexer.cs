@@ -35,13 +35,13 @@ namespace Basic_IPT
             }
             return true;
         }
-        private Status JudgeFirstStatus(string ch)
+        private Status JudgeFirstStatus(char ch)
         {
-            if (Regex.IsMatch(ch, "[0-9]"))
+            if (char.IsDigit(ch))
             {
                 return Status.NUMBER;
             }
-            else if (Regex.IsMatch(ch, "[A-Za-z]"))
+            else if (char.IsLetter(ch))
             {
                 return Status.IDENTIFIER;
             }
