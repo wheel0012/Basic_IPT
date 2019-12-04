@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {}
+    "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {
+    "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+        "projectUniqueName": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
         "projectName": "IPT_MK1",
-        "projectPath": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
-        "packagesPath": "C:\\Users\\LTJ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LTJ\\Source\\Repos\\Basic_IPT\\IPT_MK1\\obj\\",
+        "projectPath": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+        "packagesPath": "C:\\Users\\JUN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\JUN\\Source\\Repos\\Basic_IPT\\IPT_MK1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\LTJ\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\JUN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
