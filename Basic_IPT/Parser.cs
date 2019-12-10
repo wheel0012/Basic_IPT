@@ -1,6 +1,6 @@
 using System;
 
-namespace Basic_IPT
+namespace Basic_IPT.Core
 {
     class Parser
     {
