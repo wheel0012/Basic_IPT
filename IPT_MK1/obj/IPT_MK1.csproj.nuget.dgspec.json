@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj": {}
+    "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj": {
+    "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj",
-        "projectName": "Basic_IPT",
-        "projectPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj",
+        "projectUniqueName": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+        "projectName": "IPT_MK1",
+        "projectPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
         "packagesPath": "C:\\Users\\LTJ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\obj\\",
+        "outputPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "E:\\Microsoft\\Xamarin\\NuGet\\",
