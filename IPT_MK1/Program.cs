@@ -7,7 +7,7 @@ namespace IPT_MK1
     {
         static void Main(string[] args)
         {
-            Interpreter ipt = new Interpreter("1+1");
+            Interpreter ipt = new Interpreter("1+1-1");
             ipt.Process();
             Console.WriteLine("Hello World!");
         }

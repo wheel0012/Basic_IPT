@@ -31,8 +31,8 @@ namespace Basic_IPT.Core
         public class Token
         {
             public readonly TokenComp status;
-            public readonly StringBuilder value;
-            internal Token(TokenComp status, StringBuilder value)
+            public readonly string value;
+            internal Token(TokenComp status, string value)
             {
                 this.status = status;
                 this.value = value;
@@ -45,35 +45,32 @@ namespace Basic_IPT.Core
             TokenStatus last = TokenStatus.COMMON;
             while(source_code.Length > index)
             {
-                tokens.Enqueue(SeperateToken(ref index));
+                SeperateToken(ref index);
             }
-            tokens.Enqueue(new Token(TokenStatus.EOL, string.Empty));
         }
 
-        private Token SeperateToken(ref int index)
+        private void SeperateToken(ref int index)
         {
-            TokenComp current_status = TokenComp.EMPTY;
-            StringBuilder token_value = new StringBuilder();
-            for(; )
-                token_value.Append(source_code[index]);
-                current_status |= JudgeFirstStatus(source_code[index++]);
-            return new Token(current_status, token_value);
+            Token currentToken = null;
+            if (char.IsDigit(source_code[index]))
+            {
+                StringBuilder numericTerm = new StringBuilder();
+                while (char.IsDigit(source_code[index]))
+                {
+                    numericTerm.Append(source_code[index++]);
+                    if (index >= source_code.Length) break;
+                }
+                currentToken = new Token(TokenComp.NUMBER, numericTerm.ToString());
+            }
+            else if (source_code[index] == ' ')
+            {
+                while(!(source_code[++index] == ' '))
+                { }
+            }
+            else if (source_code[index] == '+') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
+            else if (source_code[index] == '-') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
+            if (currentToken != null) tokens.Enqueue(currentToken);
         }
 
-        private TokenComp JudgeFirstStatus(char ch)
-        {
-            if (char.IsDigit(ch))
-            {
-                return TokenComp.NUMBER;
-            }
-            else if (char.IsLetter(ch))
-            {
-                return TokenComp.LETTER;
-            }
-            else if (ch == '\"') return TokenComp.STRING;
-            else if (ch == ' ') return TokenComp.SPACE;
-            else if (char.IsSymbol(ch)) return TokenComp.OPERATOR;
-            return TokenComp.EMPTY;
-        }
     }
 }

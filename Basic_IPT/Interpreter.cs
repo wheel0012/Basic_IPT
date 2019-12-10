@@ -41,10 +41,18 @@ namespace Basic_IPT.Core
                 }
                 if (termStack.Count > 1 && operatorStack.Count>0)
                 {
+                    int result;
                     switch (operatorStack.Pop())
                     {
                         case "+":
-                            Console.WriteLine("result : " + (termStack.Pop() + termStack.Pop()));
+                            result = termStack.Pop() + termStack.Pop();
+                            Console.WriteLine("result : " + result);
+                            termStack.Push(result);
+                            break;
+                        case "-":
+                            result = termStack.Pop() - termStack.Pop();
+                            Console.WriteLine("result : " + result);
+                            termStack.Push(result);
                             break;
                     }
                 }
