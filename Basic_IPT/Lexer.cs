@@ -6,71 +6,107 @@ using System.Text;
 namespace Basic_IPT.Core
 {
     public enum TokenStatus {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR, EOL, SPACE}
-    [Flags]
-    public enum TokenComp {EMPTY = 0x00, LETTER = 0x01, OPERATOR = 0x02, STRING = 0x04, NUMBER=0x08, SPACE = 0x10 }
+    public enum TokenType 
+    {
+        EMPTY ,
+        LETTER,
+        TERM_OPERATOR,
+        EXPR_OPERATOR,
+        STRING, 
+        NUMBER, 
+        SPACE , 
+        EOF,
+        LPAREN,
+        RPAREN
+    }
     public enum Initiater {INDEX }
     public class Lexer
     {
         private string source_code;
-        private Queue<Token> tokens;
         private int tokenStart;
-        private int tokenCurrent;
+        private char code_char;
         private int line;
+        private int pos;
         public Lexer(string code)
         {
             this.source_code = code;
-            tokens = new Queue<Token>();
-            GenerateTokens();
-            
+            pos = 0;
+            code_char = source_code[pos];
         }
-        public Queue<Token> GetTokens()
+        public void MovePos()
         {
-            return this.tokens;
-        }
-
-        public class Token
-        {
-            public readonly TokenComp status;
-            public readonly string value;
-            internal Token(TokenComp status, string value)
+            ++pos;
+            if (pos <= source_code.Length-1)
             {
-                this.status = status;
-                this.value = value;
+                code_char = source_code[(this.pos)];
+            }
+            else
+            {
+                code_char = '\u0000';
             }
         }
-        private void GenerateTokens()
+        private void SkipBlanks()
         {
-            int index = 0;
-            Stack<string> instanceTokenStack = new Stack<string>();
-            TokenStatus last = TokenStatus.COMMON;
-            while(source_code.Length > index)
-            {
-                SeperateToken(ref index);
-            }
+            while (code_char == ' ')
+            { MovePos(); }
         }
-
-        private void SeperateToken(ref int index)
+        public Token GetNextToken()
         {
-            Token currentToken = null;
-            if (char.IsDigit(source_code[index]))
+            while (code_char != '\u0000')
             {
-                StringBuilder numericTerm = new StringBuilder();
-                while (char.IsDigit(source_code[index]))
+                if (code_char == ' ')
                 {
-                    numericTerm.Append(source_code[index++]);
-                    if (index >= source_code.Length) break;
+                    SkipBlanks();
+                    continue;
                 }
-                currentToken = new Token(TokenComp.NUMBER, numericTerm.ToString());
+
+                if (char.IsDigit(this.code_char))
+                {
+                    StringBuilder numericTerm = new StringBuilder();
+                    while (char.IsDigit(source_code[pos]))
+                    {
+                        numericTerm.Append(source_code[pos]);
+                        MovePos();
+                        if (pos >= source_code.Length) break;
+                    }
+                    return new Token(TokenType.NUMBER, numericTerm.ToString());
+                }
+                Token result;
+                switch(code_char)
+                {
+                    case '+':
+                    case '-':
+                        result = new Token(TokenType.EXPR_OPERATOR, code_char.ToString());
+                        MovePos();
+                        return result;
+                    case '*':
+                    case '/':
+                        result = new Token(TokenType.TERM_OPERATOR, code_char.ToString());
+                        MovePos();
+                        return result;
+                    case '(':
+                        result = new Token(TokenType.LPAREN, code_char.ToString());
+                        MovePos();
+                        return result;
+                    case ')':
+                        result = new Token(TokenType.RPAREN, code_char.ToString());
+                        MovePos();
+                        return result;
+                }
             }
-            else if (source_code[index] == ' ')
-            {
-                while(!(source_code[++index] == ' '))
-                { }
-            }
-            else if (source_code[index] == '+') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
-            else if (source_code[index] == '-') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
-            if (currentToken != null) tokens.Enqueue(currentToken);
+            return new Token(TokenType.EOF, string.Empty);
         }
 
+    }
+
+    public class Token
+    {
+        public readonly TokenType status;
+        public readonly string value;
+        internal Token(TokenType status, string value)
+        {
+            this.status = status;
+            this.value = value;
+        }
     }
 }

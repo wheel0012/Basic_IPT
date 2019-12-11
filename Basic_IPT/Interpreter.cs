@@ -6,59 +6,97 @@ namespace Basic_IPT.Core
     public class Interpreter
     {
         string[] source_lines;
-        public Interpreter(string source_code)
+        string source_code;
+        Token curr_token;
+        Lexer lexer;
+        public Interpreter(Lexer lexer)
         {
-            source_lines = source_code.Split("\n");
+            this.lexer = lexer;
+            curr_token = lexer.GetNextToken();
         }
-        public object Process()
+        private void GetToken(TokenType type)
         {
-            for (int i = 0; i < source_lines.Length; i++)
+            if (type == curr_token.status)
+                curr_token = this.lexer.GetNextToken();
+            else throw new Exception("Error");
+        }
+        private int GetTerm(TokenType tokenComp, Token token)
+        {
+            if (tokenComp == token.status)
             {
-                object result = Execute(new Lexer(source_lines[i]).GetTokens());
-                if (result != null)
+                return Convert.ToInt32(token.value);
+            }
+            else
+                throw new FormatException();
+        }
+        private int Factor()
+        {
+            var item = curr_token;
+            if (curr_token.status == TokenType.NUMBER)
+            {
+                GetToken(TokenType.NUMBER);
+                return GetTerm(TokenType.NUMBER, item);
+            }
+            else if (curr_token.status == TokenType.LPAREN)
+            {
+                GetToken(TokenType.LPAREN);
+                var result = Express();
+                GetToken(TokenType.RPAREN);
+                return result;
+            }
+            throw new Exception("Expression error");
+        }
+        private int Term()
+        {
+            var result = Factor();
+            while (curr_token.status == TokenType.TERM_OPERATOR)
+            {
+                switch (curr_token.value)
                 {
-                    
-                    return result;
+                    case "/":
+                        this.GetToken(TokenType.TERM_OPERATOR);
+                        result = result / this.Factor();
+                        Console.WriteLine("result : " + result);
+                        break;
+                    case "*":
+                        this.GetToken(TokenType.TERM_OPERATOR);
+                        result = result * this.Factor();
+                        Console.WriteLine("result : " + result);
+                        break;
                 }
             }
-            return null;
+            return result;
         }
-        private object Execute(Queue<Lexer.Token> code)
+        public int Express()
         {
-
             var termStack = new Stack<int>();
             var operatorStack = new Stack<string>();
-            foreach (var token in code)
+            var result = Term();
+            while(curr_token.status == TokenType.EXPR_OPERATOR)
             {
-                switch (token.status)
+                
+                switch (curr_token.status)
                 {
-                    case TokenComp.NUMBER:
-                        termStack.Push(Convert.ToInt16(token.value.ToString()));
-                        break;
-                    case TokenComp.OPERATOR:
-                        operatorStack.Push(token.value.ToString());
+                    case TokenType.EXPR_OPERATOR:
+
+                        switch (curr_token.value)
+                        {
+                            case "+":
+                                GetToken(TokenType.EXPR_OPERATOR);
+                                result = result + Term();
+                                Console.WriteLine("result : " + result);
+                                break;
+                            case "-":
+                                GetToken(TokenType.EXPR_OPERATOR);
+                                result = result - Term();
+                                Console.WriteLine("result : " + result);
+                                break;
+                        }
                         break;
                 }
-                if (termStack.Count > 1 && operatorStack.Count>0)
-                {
-                    int result;
-                    switch (operatorStack.Pop())
-                    {
-                        case "+":
-                            result = termStack.Pop() + termStack.Pop();
-                            Console.WriteLine("result : " + result);
-                            termStack.Push(result);
-                            break;
-                        case "-":
-                            result = termStack.Pop() - termStack.Pop();
-                            Console.WriteLine("result : " + result);
-                            termStack.Push(result);
-                            break;
-                    }
-                }
-                Console.WriteLine(token.status.ToString() + ":" + token.value);
+                //Console.WriteLine(token.status.ToString() + ":" + token.value);
             }
-            return 1;
+            return result;
         }
         private void IF_status()
         {
