@@ -1,19 +1,72 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Basic_IPT.Core
 {
-    public class Interpreter
+    public class NodeVisitor
+    {
+        public object Visit(object node)
+        {
+            var methodName = "Visit_" + node.GetType().Name;
+            Type type = typeof(Interpreter);
+            MethodInfo func = type.GetMethod(methodName);
+            var result = func.Invoke(obj: this,parameters: new object[] { node });
+            return result;
+        }
+    }
+    public class Interpreter : NodeVisitor
     {
         string[] source_lines;
         string source_code;
-        Token curr_token;
-        Lexer lexer;
-        public Interpreter(Lexer lexer)
+        Parser parser;
+        public Interpreter(Parser parser)
         {
-            this.lexer = lexer;
-            curr_token = lexer.GetNextToken();
+            this.parser= parser;
         }
+        public int Visit_Num(object node)
+        {
+            var typed_node = (Num)node;
+            return typed_node.value;
+        }
+        public int Visit_UnaryOP(object node)
+        {
+            var typed_node = (UnaryOP)node;
+            switch(typed_node.token.status)
+            {
+                case TokenType.PLUS:
+                    return +(int)this.Visit(typed_node.expr);
+                case TokenType.MINUS:
+                    return -(int)this.Visit(typed_node.expr);
+            }
+            throw new Exception("Unary type Error" + this.parser.lexer.GetPos());
+        }
+        public int Visit_BinOP(object node)
+        {
+            var typed_node = (BinOP)node;
+            switch (typed_node.op.status)
+            {
+                case TokenType.PLUS:
+                    return (int)this.Visit(typed_node.left) + (int)this.Visit(typed_node.right);
+                case TokenType.MINUS:
+                    return (int)this.Visit(typed_node.left) - (int)this.Visit(typed_node.right);
+                case TokenType.TERM_OPERATOR:
+                    switch(typed_node.op.value)
+                    {
+                        case "*":
+                            return (int)this.Visit(typed_node.left) * (int)this.Visit(typed_node.right);
+                        case "/":
+                            return (int)this.Visit(typed_node.left) / (int)this.Visit(typed_node.right);
+                    }
+                    break;
+            }
+            throw new Exception("Visit_BinOP method error");
+        }
+        public object Process()
+        {
+            var ASTtree = this.parser.Parse();
+            return this.Visit(ASTtree);
+        }/*
         private void GetToken(TokenType type)
         {
             if (type == curr_token.status)
@@ -32,17 +85,16 @@ namespace Basic_IPT.Core
         private int Factor()
         {
             var item = curr_token;
-            if (curr_token.status == TokenType.NUMBER)
+            switch(curr_token.status)
             {
-                GetToken(TokenType.NUMBER);
-                return GetTerm(TokenType.NUMBER, item);
-            }
-            else if (curr_token.status == TokenType.LPAREN)
-            {
-                GetToken(TokenType.LPAREN);
-                var result = Express();
-                GetToken(TokenType.RPAREN);
-                return result;
+                case TokenType.NUMBER:
+                    GetToken(TokenType.NUMBER);
+                    return GetTerm(TokenType.NUMBER, item);
+                case TokenType.LPAREN:
+                    GetToken(TokenType.LPAREN);
+                    var result = Express();
+                    GetToken(TokenType.RPAREN);
+                    return result;
             }
             throw new Exception("Expression error");
         }
@@ -72,26 +124,19 @@ namespace Basic_IPT.Core
             var termStack = new Stack<int>();
             var operatorStack = new Stack<string>();
             var result = Term();
-            while(curr_token.status == TokenType.EXPR_OPERATOR)
+            while(curr_token.status == TokenType.PLUS || curr_token.status == TokenType.MINUS)
             {
-                
                 switch (curr_token.status)
                 {
-                    case TokenType.EXPR_OPERATOR:
-
-                        switch (curr_token.value)
-                        {
-                            case "+":
-                                GetToken(TokenType.EXPR_OPERATOR);
-                                result = result + Term();
-                                Console.WriteLine("result : " + result);
-                                break;
-                            case "-":
-                                GetToken(TokenType.EXPR_OPERATOR);
-                                result = result - Term();
-                                Console.WriteLine("result : " + result);
-                                break;
-                        }
+                    case TokenType.PLUS:
+                        GetToken(TokenType.PLUS);
+                        result = result + Term();
+                        Console.WriteLine("result : " + result);
+                        break;
+                    case TokenType.MINUS:
+                        GetToken(TokenType.MINUS);
+                        result = result - Term();
+                        Console.WriteLine("result : " + result);
                         break;
                 }
                 //Console.WriteLine(token.status.ToString() + ":" + token.value);
@@ -101,6 +146,6 @@ namespace Basic_IPT.Core
         private void IF_status()
         {
 
-        }
+        }*/
     }
 }

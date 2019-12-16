@@ -10,9 +10,11 @@ namespace IPT_MK1
             while (true)
             {
                 Console.Write("IPT_MK1>>");
-                Lexer lexer = new Lexer(Console.ReadLine());
-                Interpreter ipt = new Interpreter(lexer);
-                ipt.Express();
+                var lexer = new Lexer(Console.ReadLine());
+                var parser = new Parser(lexer);
+                var ipt = new Interpreter(parser);
+                var result = ipt.Process();
+                Console.WriteLine(result.ToString());
             }
         }
     }

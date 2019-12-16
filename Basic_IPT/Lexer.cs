@@ -11,13 +11,20 @@ namespace Basic_IPT.Core
         EMPTY ,
         LETTER,
         TERM_OPERATOR,
-        EXPR_OPERATOR,
+        PLUS,
+        MINUS,
         STRING, 
         NUMBER, 
         SPACE , 
         EOF,
         LPAREN,
-        RPAREN
+        RPAREN,
+        ID,
+        IF,
+        ELSEIF,
+        ELSE,
+        THEN,
+        RETURN
     }
     public enum Initiater {INDEX }
     public class Lexer
@@ -32,6 +39,10 @@ namespace Basic_IPT.Core
             this.source_code = code;
             pos = 0;
             code_char = source_code[pos];
+        }
+        public int GetPos()
+        {
+            return this.pos;
         }
         public void MovePos()
         {
@@ -50,6 +61,18 @@ namespace Basic_IPT.Core
             while (code_char == ' ')
             { MovePos(); }
         }
+        private int GetInteger()
+        {
+            StringBuilder value = new StringBuilder();
+            int result;
+            while (char.IsDigit(code_char) && code_char != '\u0000')
+            {
+                value.Append(code_char);
+                MovePos();
+            }
+            if (int.TryParse(value.ToString(), out result)) return result;
+            throw new FormatException();
+        }
         public Token GetNextToken()
         {
             while (code_char != '\u0000')
@@ -62,21 +85,17 @@ namespace Basic_IPT.Core
 
                 if (char.IsDigit(this.code_char))
                 {
-                    StringBuilder numericTerm = new StringBuilder();
-                    while (char.IsDigit(source_code[pos]))
-                    {
-                        numericTerm.Append(source_code[pos]);
-                        MovePos();
-                        if (pos >= source_code.Length) break;
-                    }
-                    return new Token(TokenType.NUMBER, numericTerm.ToString());
+                    return new Token(TokenType.NUMBER, GetInteger());
                 }
                 Token result;
                 switch(code_char)
                 {
                     case '+':
+                        result = new Token(TokenType.PLUS, code_char.ToString());
+                        MovePos();
+                        return result;
                     case '-':
-                        result = new Token(TokenType.EXPR_OPERATOR, code_char.ToString());
+                        result = new Token(TokenType.MINUS, code_char.ToString());
                         MovePos();
                         return result;
                     case '*':
@@ -102,8 +121,8 @@ namespace Basic_IPT.Core
     public class Token
     {
         public readonly TokenType status;
-        public readonly string value;
-        internal Token(TokenType status, string value)
+        public readonly object value;
+        internal Token(TokenType status, object value)
         {
             this.status = status;
             this.value = value;
