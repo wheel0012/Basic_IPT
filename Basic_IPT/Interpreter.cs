@@ -20,9 +20,11 @@ namespace Basic_IPT.Core
         string[] source_lines;
         string source_code;
         Parser parser;
+        Dictionary<string, Var> GLOBAL_SCOPE;
         public Interpreter(Parser parser)
         {
             this.parser= parser;
+            this.GLOBAL_SCOPE = new Dictionary<string, Var>();
         }
         public int Visit_Num(object node)
         {
@@ -62,90 +64,36 @@ namespace Basic_IPT.Core
             }
             throw new Exception("Visit_BinOP method error");
         }
+        public void Visit_Compound(object node)
+        {
+            var typed_node = (Compound)node;
+            foreach(var child in typed_node.children)
+            {
+                this.Visit(child);
+            }
+        }
+        public void Visit_Assign(object node)
+        {
+            var typed_node = (Assign)node;
+            var name = ((Var)typed_node.left).value.ToString();
+            this.GLOBAL_SCOPE.Add(name, (Var)this.Visit(typed_node.right));
+        }
+        public Var Visit_Var(object node)
+        {
+            var typed_node = (Var)node;
+            var var_name = typed_node.value.ToString();
+            Var var;
+            if (this.GLOBAL_SCOPE.TryGetValue(var_name, out var))
+            {
+                Console.WriteLine(var.value+ ";"+var);
+                return var;
+            }
+            else throw new Exception("Undefinded variable name");
+        }
         public object Process()
         {
             var ASTtree = this.parser.Parse();
             return this.Visit(ASTtree);
-        }/*
-        private void GetToken(TokenType type)
-        {
-            if (type == curr_token.status)
-                curr_token = this.lexer.GetNextToken();
-            else throw new Exception("Error");
         }
-        private int GetTerm(TokenType tokenComp, Token token)
-        {
-            if (tokenComp == token.status)
-            {
-                return Convert.ToInt32(token.value);
-            }
-            else
-                throw new FormatException();
-        }
-        private int Factor()
-        {
-            var item = curr_token;
-            switch(curr_token.status)
-            {
-                case TokenType.NUMBER:
-                    GetToken(TokenType.NUMBER);
-                    return GetTerm(TokenType.NUMBER, item);
-                case TokenType.LPAREN:
-                    GetToken(TokenType.LPAREN);
-                    var result = Express();
-                    GetToken(TokenType.RPAREN);
-                    return result;
-            }
-            throw new Exception("Expression error");
-        }
-        private int Term()
-        {
-            var result = Factor();
-            while (curr_token.status == TokenType.TERM_OPERATOR)
-            {
-                switch (curr_token.value)
-                {
-                    case "/":
-                        this.GetToken(TokenType.TERM_OPERATOR);
-                        result = result / this.Factor();
-                        Console.WriteLine("result : " + result);
-                        break;
-                    case "*":
-                        this.GetToken(TokenType.TERM_OPERATOR);
-                        result = result * this.Factor();
-                        Console.WriteLine("result : " + result);
-                        break;
-                }
-            }
-            return result;
-        }
-        public int Express()
-        {
-            var termStack = new Stack<int>();
-            var operatorStack = new Stack<string>();
-            var result = Term();
-            while(curr_token.status == TokenType.PLUS || curr_token.status == TokenType.MINUS)
-            {
-                switch (curr_token.status)
-                {
-                    case TokenType.PLUS:
-                        GetToken(TokenType.PLUS);
-                        result = result + Term();
-                        Console.WriteLine("result : " + result);
-                        break;
-                    case TokenType.MINUS:
-                        GetToken(TokenType.MINUS);
-                        result = result - Term();
-                        Console.WriteLine("result : " + result);
-                        break;
-                }
-                //Console.WriteLine(token.status.ToString() + ":" + token.value);
-            }
-            return result;
-        }
-        private void IF_status()
-        {
-
-        }*/
     }
 }

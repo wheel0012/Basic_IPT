@@ -24,7 +24,13 @@ namespace Basic_IPT.Core
         ELSEIF,
         ELSE,
         THEN,
-        RETURN
+        RETURN,
+        ASSIGN,
+        DOT,
+        BEGIN,
+        END,
+        VAR,
+        EOL
     }
     public enum Initiater {INDEX }
     public class Lexer
@@ -34,6 +40,19 @@ namespace Basic_IPT.Core
         private char code_char;
         private int line;
         private int pos;
+        static Dictionary<string, Token> keywords =
+            new Dictionary<string, Token>
+            {
+                {TokenType.IF.ToString(), new Token(TokenType.IF, TokenType.IF.ToString()) },
+
+                {TokenType.THEN.ToString(), new Token(TokenType.THEN, TokenType.THEN.ToString()) },
+
+                {TokenType.ELSE.ToString(), new Token(TokenType.ELSE, TokenType.ELSE.ToString()) },
+
+                {TokenType.ELSEIF.ToString() , new Token(TokenType.ELSEIF, TokenType.ELSEIF.ToString()) },
+
+                {TokenType.RETURN.ToString(), new Token(TokenType.RETURN, TokenType.RETURN.ToString()) }
+            };
         public Lexer(string code)
         {
             this.source_code = code;
@@ -53,8 +72,26 @@ namespace Basic_IPT.Core
             }
             else
             {
-                code_char = '\u0000';
+                code_char = Symbol.char_null;
             }
+        }
+        private Token GetID()
+        {
+            Token resultToken;
+            var result = new StringBuilder();
+            while(code_char != Symbol.char_null && char.IsLetterOrDigit(code_char))
+            {
+                result.Append(code_char);
+                MovePos();
+            }
+            if (keywords.TryGetValue(result.ToString(), out resultToken)) return resultToken;
+            throw new Exception("Undefinded keyword error");
+        }
+        public char Peek()
+        {
+            var peek_pos = this.pos+1;
+            if (peek_pos > this.source_code.Length) return Symbol.char_null;
+            else return source_code[peek_pos];
         }
         private void SkipBlanks()
         {
@@ -65,7 +102,7 @@ namespace Basic_IPT.Core
         {
             StringBuilder value = new StringBuilder();
             int result;
-            while (char.IsDigit(code_char) && code_char != '\u0000')
+            while (char.IsDigit(code_char) && code_char != Symbol.char_null)
             {
                 value.Append(code_char);
                 MovePos();
@@ -75,7 +112,7 @@ namespace Basic_IPT.Core
         }
         public Token GetNextToken()
         {
-            while (code_char != '\u0000')
+            while (code_char != Symbol.char_null)
             {
                 if (code_char == ' ')
                 {
@@ -86,6 +123,10 @@ namespace Basic_IPT.Core
                 if (char.IsDigit(this.code_char))
                 {
                     return new Token(TokenType.NUMBER, GetInteger());
+                }
+                if (char.IsLetter(this.code_char))
+                {
+                    return GetID();
                 }
                 Token result;
                 switch(code_char)
@@ -98,6 +139,25 @@ namespace Basic_IPT.Core
                         result = new Token(TokenType.MINUS, code_char.ToString());
                         MovePos();
                         return result;
+                    case ':':
+                        if (this.Peek() == '=')
+                        {
+                            this.MovePos();
+                            this.MovePos();
+                            return new Token(TokenType.ASSIGN, ":=");
+                        }
+                        else continue;
+                    case '\r':
+                        if (this.Peek() == '\n')
+                        {
+                            this.MovePos();
+                            this.MovePos();
+                            return new Token(TokenType.EOL, "EOL");
+                        }
+                        else continue;
+                    case '.':
+                        this.MovePos();
+                        return new Token(TokenType.DOT, ".");
                     case '*':
                     case '/':
                         result = new Token(TokenType.TERM_OPERATOR, code_char.ToString());
