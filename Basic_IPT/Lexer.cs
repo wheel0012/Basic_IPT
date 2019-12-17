@@ -140,7 +140,12 @@ namespace Basic_IPT.Core
                             this.MovePos();
                             return new Token(TokenType.COMMA, ",");
                         }
-                            
+                    case '=':
+                        return new Token(TokenType.ISEQUAL, "=");
+                    case '<':
+                        return new Token(TokenType.ISLESS, "<");
+                    case '>':
+                        return new Token(TokenType.ISMORE, ">");
                     case ',':
                         this.MovePos();
                         return new Token(TokenType.COMMA, ",");
@@ -173,14 +178,7 @@ namespace Basic_IPT.Core
                         return result;
                 }
             }
-<<<<<<< HEAD
-            else if (source_code[index] == '+') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
-            else if (source_code[index] == '-') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
-
-            if (currentToken != null) tokens.Enqueue(currentToken);
-=======
             return new Token(TokenType.EOF, string.Empty);
->>>>>>> f2127bb4ae0413a788a6560d12971d9caad6b856
         }
 
     }

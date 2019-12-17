@@ -103,25 +103,25 @@ namespace Basic_IPT.Core
                     return (float)left / (float)right;
             }
             throw new Exception("Visit_BinOP method error");
-        }/*
+        }
         public bool Visit_BoolOP(object node)
         {
             var typed_node = (BinOP)node;
             switch (typed_node.op.status)
             {
-                case TokenType.PLUS:
-                    return (int)this.Visit(typed_node.left) + (int)this.Visit(typed_node.right);
-                case TokenType.MINUS:
-                    return (int)this.Visit(typed_node.left) - (int)this.Visit(typed_node.right);
-                case TokenType.MUL:
-                    return (int)this.Visit(typed_node.left) * (int)this.Visit(typed_node.right);
-                case TokenType.INTEGER_DIV:
-                    return (int)this.Visit(typed_node.left) / (int)this.Visit(typed_node.right);
-                case TokenType.FLOAT_DIV:
-                    return (float)this.Visit(typed_node.left) / (float)this.Visit(typed_node.right);
+                case TokenType.ISEQUAL:
+                    return this.Visit(typed_node.left) == this.Visit(typed_node.right);
+                case TokenType.ISLESS:
+                    return this.Visit(typed_node.left) < this.Visit(typed_node.right);
+                case TokenType.ISMORE:
+                    return this.Visit(typed_node.left) > this.Visit(typed_node.right);
+                case TokenType.ISLESSOREQUAL:
+                    return this.Visit(typed_node.left) <= this.Visit(typed_node.right);
+                case TokenType.ISMOREOREQUAL:
+                    return this.Visit(typed_node.left) >= this.Visit(typed_node.right);
             }
             throw new Exception("Visit_BinOP method error");
-        }*/
+        }
         public void Visit_Compound(object node)
         {
             var typed_node = (Compound)node;
