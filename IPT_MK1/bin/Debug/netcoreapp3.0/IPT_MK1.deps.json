@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "IPT_MK1/1.0.0": {
+        "dependencies": {
+          "Basic_IPT": "1.0.0"
+        },
+        "runtime": {
+          "IPT_MK1.dll": {}
+        }
+      },
+      "Basic_IPT/1.0.0": {
+        "runtime": {
+          "Basic_IPT.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IPT_MK1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Basic_IPT/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

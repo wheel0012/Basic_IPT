@@ -5,72 +5,182 @@ using System.Text;
 
 namespace Basic_IPT.Core
 {
-    public enum TokenStatus {IDENTIFIER, STRING, FUNCTION, COMMON, NUMBER, OPERATOR, EOL, SPACE}
-    [Flags]
-    public enum TokenComp {EMPTY = 0x00, LETTER = 0x01, OPERATOR = 0x02, STRING = 0x04, NUMBER=0x08, SPACE = 0x10 }
+    
     public enum Initiater {INDEX }
     public class Lexer
     {
         private string source_code;
-        private Queue<Token> tokens;
         private int tokenStart;
-        private int tokenCurrent;
+        private char code_char;
         private int line;
+        private int pos;
+        static Dictionary<string, Token> keywords = TokenTool.RegistToken();
+            
         public Lexer(string code)
         {
             this.source_code = code;
-            tokens = new Queue<Token>();
-            GenerateTokens();
-            
+            pos = 0;
+            code_char = source_code[pos];
         }
-        public Queue<Token> GetTokens()
+        public int GetPos()
         {
-            return this.tokens;
+            return this.pos;
         }
-
-        public class Token
+        public void MovePos()
         {
-            public readonly TokenComp status;
-            public readonly string value;
-            internal Token(TokenComp status, string value)
+            ++pos;
+            if (pos <= source_code.Length-1)
             {
-                this.status = status;
-                this.value = value;
+                code_char = source_code[(this.pos)];
+            }
+            else
+            {
+                code_char = Symbol.char_null;
             }
         }
-        private void GenerateTokens()
+        private Token GetID()
         {
-            int index = 0;
-            Stack<string> instanceTokenStack = new Stack<string>();
-            TokenStatus last = TokenStatus.COMMON;
-            while(source_code.Length > index)
+            Token resultToken;
+            var result = new StringBuilder();
+            while(code_char != Symbol.char_null && char.IsLetterOrDigit(code_char))
             {
-                SeperateToken(ref index);
+                result.Append(code_char);
+                MovePos();
             }
+            string str = result.ToString();
+            if (keywords.TryGetValue(str, out resultToken)) return resultToken;
+            else return new Token(TokenType.ID, str);
         }
-
-        private void SeperateToken(ref int index)
+        public char Peek()
         {
-            Token currentToken = null;
-            if (char.IsDigit(source_code[index]))
+            var peek_pos = this.pos+1;
+            if (peek_pos > this.source_code.Length) return Symbol.char_null;
+            else return source_code[peek_pos];
+        }
+        private void SkipBlanks()
+        {
+            while (code_char == ' ')
+            { MovePos(); }
+        }
+        private void SkipComments()
+        {
+            while (code_char != '\n')
+            { MovePos(); }
+            MovePos();
+        }
+        private Token GetNumber()
+        {
+            StringBuilder value = new StringBuilder();
+            int intResult;
+            float floResult;
+            while (char.IsDigit(code_char) && code_char != Symbol.char_null)
             {
-                StringBuilder numericTerm = new StringBuilder();
-                while (char.IsDigit(source_code[index]))
+                value.Append(code_char);
+                MovePos();
+            }
+            if (code_char == '.')
+            {
+                value.Append(code_char);
+                MovePos();
+                while (char.IsDigit(code_char) && code_char != Symbol.char_null)
                 {
-                    numericTerm.Append(source_code[index++]);
-                    if (index >= source_code.Length) break;
+                    value.Append(code_char);
+                    MovePos();
                 }
-                currentToken = new Token(TokenComp.NUMBER, numericTerm.ToString());
+                if (float.TryParse(value.ToString(), out floResult)) return new Token(TokenType.REAL_CONST, floResult);
+                throw new FormatException();
             }
-            else if (source_code[index] == ' ')
+
+            if (int.TryParse(value.ToString(), out intResult)) return new Token(TokenType.INTEGER_CONST, intResult);
+            throw new FormatException();
+        }
+        public Token GetNextToken()
+        {
+            while (code_char != Symbol.char_null)
             {
-                while(!(source_code[++index] == ' '))
-                { }
+                if (code_char == '#')
+                {
+                    SkipComments();
+                    continue;
+                }
+                if (code_char == ' ')
+                {
+                    SkipBlanks();
+                    continue;
+                }
+
+                if (char.IsDigit(this.code_char))
+                {
+                    return GetNumber();
+                }
+                if (char.IsLetter(this.code_char))
+                {
+                    return GetID();
+                }
+                Token result;
+                switch(code_char)
+                {
+                    case '+':
+                        result = new Token(TokenType.PLUS, "+");      
+                        MovePos();
+                        return result;
+                    case '-':
+                        result = new Token(TokenType.MINUS, "-");
+                        MovePos();
+                        return result;
+                    case ':':
+                        if (this.Peek() == '=')
+                        {
+                            this.MovePos();
+                            this.MovePos();
+                            return new Token(TokenType.ASSIGN, ":=");
+                        }
+                        else
+                        {
+                            this.MovePos();
+                            return new Token(TokenType.COMMA, ",");
+                        }
+                            
+                    case ',':
+                        this.MovePos();
+                        return new Token(TokenType.COMMA, ",");
+                    case '\r':
+                        if (this.Peek() == '\n')
+                        {
+                            this.MovePos();
+                            this.MovePos();
+                            return new Token(TokenType.EOL, "EOL");
+                        }
+                        else continue;
+                    case '.':
+                        this.MovePos();
+                        return new Token(TokenType.DOT, ".");
+                    case '*':
+                        result = new Token(TokenType.MUL, code_char.ToString());
+                        MovePos();
+                        return result;
+                    case '/':
+                        result = new Token(TokenType.DIV, code_char.ToString());
+                        this.MovePos();
+                        return result;
+                    case '(':
+                        result = new Token(TokenType.LPAREN, code_char.ToString());
+                        MovePos();
+                        return result;
+                    case ')':
+                        result = new Token(TokenType.RPAREN, code_char.ToString());
+                        MovePos();
+                        return result;
+                }
             }
+<<<<<<< HEAD
             else if (source_code[index] == '+') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
             else if (source_code[index] == '-') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
 
             if (currentToken != null) tokens.Enqueue(currentToken);
+=======
+            return new Token(TokenType.EOF, string.Empty);
+>>>>>>> f2127bb4ae0413a788a6560d12971d9caad6b856
         }
 
     }
