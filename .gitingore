@@ -1,3 +1,5 @@
 *.sno
-bin
-obj
+Basic_IPT/bin
+Basic_IPTobj
+IPT_MK1/bin
+IPT_MK1/obj
