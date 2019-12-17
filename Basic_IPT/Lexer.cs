@@ -69,6 +69,7 @@ namespace Basic_IPT.Core
             }
             else if (source_code[index] == '+') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
             else if (source_code[index] == '-') currentToken = new Token(TokenComp.OPERATOR, source_code[index++].ToString());
+
             if (currentToken != null) tokens.Enqueue(currentToken);
         }
 
