@@ -12,3 +12,17 @@ C:\Users\JUN\Documents\GitHub\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.
 C:\Users\JUN\Documents\GitHub\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.csproj.CopyComplete
 C:\Users\JUN\Documents\GitHub\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.dll
 C:\Users\JUN\Documents\GitHub\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.pdb
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.csprojAssemblyReference.cache
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.AssemblyInfoInputs.cache
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.AssemblyInfo.cs
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.dll
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.pdb
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.exe
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.deps.json
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.runtimeconfig.json
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.runtimeconfig.dev.json
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.dll
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\IPT_MK1.pdb
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\Basic_IPT.dll
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\bin\Debug\netcoreapp3.0\Basic_IPT.pdb
+C:\Users\LTJ\Documents\Personal\Basic_IPT\IPT_MK1\obj\Debug\netcoreapp3.0\IPT_MK1.csproj.CopyComplete

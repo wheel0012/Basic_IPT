@@ -18,6 +18,8 @@ namespace Basic_IPT.Core
 
                 {TokenType.ELSEIF.ToString() , new Token(TokenType.ELSEIF, TokenType.ELSEIF.ToString()) },
 
+                {TokenType.ENDIF.ToString() , new Token(TokenType.ENDIF, TokenType.ENDIF.ToString()) },
+
                 {TokenType.RETURN.ToString(), new Token(TokenType.RETURN, TokenType.RETURN.ToString()) },
 
                 {TokenType.BEGIN.ToString(), new Token(TokenType.BEGIN, TokenType.BEGIN.ToString()) },
@@ -25,7 +27,6 @@ namespace Basic_IPT.Core
                 {TokenType.END.ToString(), new Token(TokenType.END, TokenType.END.ToString()) },
 
                 {TokenType.PROGRAM.ToString(), new Token(TokenType.PROGRAM, TokenType.PROGRAM.ToString()) },
-
 
                 {TokenType.REAL.ToString(), new Token(TokenType.REAL, TokenType.REAL.ToString()) },
 
@@ -55,10 +56,13 @@ namespace Basic_IPT.Core
         LPAREN,
         RPAREN,
         ID,
+
         IF,
         ELSEIF,
         ELSE,
         THEN,
+        ENDIF,
+
         RETURN,
         ASSIGN,
         DOT,
@@ -77,7 +81,10 @@ namespace Basic_IPT.Core
         ISLESS,
         ISMOREOREQUAL,
         ISLESSOREQUAL,
-        ISNOT
+        ISNOT,
+
+        AND,
+        OR
     }
     public class Token
     {

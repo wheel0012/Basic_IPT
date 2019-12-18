@@ -141,11 +141,20 @@ namespace Basic_IPT.Core
                             return new Token(TokenType.COMMA, ",");
                         }
                     case '=':
+                        MovePos();
                         return new Token(TokenType.ISEQUAL, "=");
                     case '<':
+                        MovePos();
                         return new Token(TokenType.ISLESS, "<");
                     case '>':
+                        MovePos();
                         return new Token(TokenType.ISMORE, ">");
+                    case '&':
+                        MovePos();
+                        return new Token(TokenType.AND, "&");
+                    case '|':
+                        MovePos();
+                        return new Token(TokenType.OR, "|");
                     case ',':
                         this.MovePos();
                         return new Token(TokenType.COMMA, ",");
@@ -157,23 +166,26 @@ namespace Basic_IPT.Core
                             return new Token(TokenType.EOL, "EOL");
                         }
                         else continue;
+                    case '\n':
+                        this.MovePos();
+                        return new Token(TokenType.EOL, "EOL");
                     case '.':
                         this.MovePos();
                         return new Token(TokenType.DOT, ".");
                     case '*':
-                        result = new Token(TokenType.MUL, code_char.ToString());
+                        result = new Token(TokenType.MUL, "*");
                         MovePos();
                         return result;
                     case '/':
-                        result = new Token(TokenType.DIV, code_char.ToString());
+                        result = new Token(TokenType.DIV, "/");
                         this.MovePos();
                         return result;
                     case '(':
-                        result = new Token(TokenType.LPAREN, code_char.ToString());
+                        result = new Token(TokenType.LPAREN, "(");
                         MovePos();
                         return result;
                     case ')':
-                        result = new Token(TokenType.RPAREN, code_char.ToString());
+                        result = new Token(TokenType.RPAREN, ")");
                         MovePos();
                         return result;
                 }

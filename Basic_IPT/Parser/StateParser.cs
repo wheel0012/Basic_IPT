@@ -6,11 +6,11 @@ namespace Basic_IPT.Core
 {
     public partial class Parser
     {
-        private object CompoundStatement()
+        private Compound CompoundStatement()
         {
-            this.GetToken(TokenType.BEGIN);
+            //this.GetToken(TokenType.BEGIN);
             var nodes = StatementList();
-            this.GetToken(TokenType.END);
+            //this.GetToken(TokenType.END);
             var root = new Compound();
             foreach (var node in nodes)
             {
@@ -18,7 +18,35 @@ namespace Basic_IPT.Core
             }
             return root;
         }
-
+        private IFState IFStatement()
+        {
+            var cases = new List<IFCase>();
+            this.GetToken(TokenType.IF);
+            var condition = BoolExpress();
+            this.GetToken(TokenType.THEN);
+            var execute = Express();
+            cases.Add(new IFCase(condition, execute));
+            while(curr_token.status != TokenType.ENDIF)
+            {
+                switch(curr_token.status)
+                {
+                    case TokenType.ELSEIF:
+                        this.GetToken(TokenType.ELSEIF);
+                        var elifCondition = BoolExpress();
+                        this.GetToken(TokenType.THEN);
+                        var elifResult = Express();
+                        cases.Add(new IFCase(elifCondition, elifResult));
+                        break;
+                    case TokenType.ELSE:
+                        var elseResult = Express();
+                        cases.Add(new IFCase(new BoolOP(true, new Token(TokenType.ISEQUAL, "="),true) , elseResult));
+                        break;
+                }
+                GetToken(TokenType.EOL);
+            }
+            this.GetToken(TokenType.ENDIF);
+            return new IFState(cases);
+        }
         private List<object> StatementList()
         {
             var node = Statement();
@@ -31,7 +59,12 @@ namespace Basic_IPT.Core
             if (curr_token.status == TokenType.ID)
                 throw new Exception("No right-node error");
             return results;
-        }
+        }/*
+        private object ProcessIFState()
+        {
+            if()
+        }*/
+
         private object Statement()
         {
             object result = null;
@@ -43,13 +76,17 @@ namespace Basic_IPT.Core
                 case TokenType.ID:
                     result = this.AssignmentStatement();
                     break;
+                case TokenType.IF:
+                    result = this.IFStatement();
+                    break;
+
                 default:
                     result = this.Empty();
                     break;
             }
             return result;
         }
-        private object AssignmentStatement()
+        private Assign AssignmentStatement()
         {
             var left = this.Variable();
             var token = this.curr_token;

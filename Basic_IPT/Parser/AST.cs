@@ -48,8 +48,8 @@ namespace Basic_IPT.Core
     }
     class BoolOP : AST
     {
-        public readonly object left;
-        public readonly object right;
+        public readonly dynamic left;
+        public readonly dynamic right;
         public readonly Token op;
         public BoolOP(object left, Token op, object right)
         {
@@ -76,6 +76,26 @@ namespace Basic_IPT.Core
         {
             this.token = token;
             this.value = Convert.ToSingle(token.value);
+        }
+    }
+    class BoolNode : AST
+    {
+        public readonly Token token;
+        public readonly bool value;
+        public BoolNode(Token token)
+        {
+            this.token = token;
+            this.value = Convert.ToBoolean(token.value);
+        }
+    }
+    class BoolUnaryOP : AST
+    {
+        public readonly Token token;
+        public readonly object expr;
+        public BoolUnaryOP(Token op, object expr)
+        {
+            this.token = op;
+            this.expr = expr;
         }
     }
     class UnaryOP : AST
@@ -106,6 +126,14 @@ namespace Basic_IPT.Core
             this.left = left;
             this.token = token;
             this.right = right;
+        }
+    }
+    public class IFState : AST
+    {
+        public readonly List<IFCase> cases;
+        public IFState(List<IFCase> cases)
+        {
+            this.cases = cases;
         }
     }
     public class Program : AST
@@ -146,6 +174,16 @@ namespace Basic_IPT.Core
         {
             this.token = token;
             this.value = token.value;
+        }
+    }
+    public class IFCase
+    {
+        public readonly object condition;
+        public readonly object execute;
+        public IFCase(object condition, object execute)
+        {
+            this.condition = condition;
+            this.execute = execute;
         }
     }
 }

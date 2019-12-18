@@ -27,24 +27,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\JUN\\.nuget\\packages\\": {},
+    "C:\\Users\\LTJ\\.nuget\\packages\\": {},
+    "E:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JUN\\Documents\\GitHub\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+      "projectUniqueName": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
       "projectName": "IPT_MK1",
-      "projectPath": "C:\\Users\\JUN\\Documents\\GitHub\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
-      "packagesPath": "C:\\Users\\JUN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JUN\\Documents\\GitHub\\Basic_IPT\\IPT_MK1\\obj\\",
+      "projectPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\IPT_MK1.csproj",
+      "packagesPath": "C:\\Users\\LTJ\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\IPT_MK1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "E:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\JUN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\LTJ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
@@ -56,8 +59,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\JUN\\Documents\\GitHub\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj": {
-              "projectPath": "C:\\Users\\JUN\\Documents\\GitHub\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj"
+            "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj": {
+              "projectPath": "C:\\Users\\LTJ\\Documents\\Personal\\Basic_IPT\\Basic_IPT\\Basic_IPT.csproj"
             }
           }
         }

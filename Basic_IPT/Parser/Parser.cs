@@ -16,12 +16,13 @@ namespace Basic_IPT.Core
 
         public object Parse()
         {
-            var node = this.Program();
-            if (this.curr_token.status != TokenType.EOF)
-                throw new Exception("No delimiter error");
+            //var node = this.Program();
+            //if (this.curr_token.status != TokenType.EOF)
+            //    throw new Exception("No delimiter error");
+            var node =  CompoundStatement();
+            //GetToken(TokenType.DOT);
             return node;
         }
-
         private object Factor()
         {
             var item = curr_token;
@@ -69,7 +70,7 @@ namespace Basic_IPT.Core
                         this.GetToken(TokenType.FLOAT_DIV);
                         break;*/
                 }
-                node = MakeOperation(node, token, Factor());
+                node = MakeNumOperation(node, token, Factor());
             }
             return node;
         }
@@ -89,11 +90,72 @@ namespace Basic_IPT.Core
                         GetToken(TokenType.MINUS);
                         break;
                 }
-                node = MakeOperation(node, token, Term());
+                node = MakeNumOperation(node, token, Term());
             }
             return node;
         }
-        private object MakeOperation(object node_1, Token token, object node_2)
+        private object BoolFactor()
+        {
+            var item = curr_token;
+            switch (curr_token.status)
+            {
+                case TokenType.INTEGER_CONST:
+                    GetToken(TokenType.INTEGER_CONST);
+                    return new Num(item);
+                case TokenType.REAL_CONST:
+                    GetToken(TokenType.REAL_CONST);
+                    return new Real(item);
+                case TokenType.LPAREN:
+                    GetToken(TokenType.LPAREN);
+                    var result = BoolExpress();
+                    GetToken(TokenType.RPAREN);
+                    return result;
+                default:
+                    var node = this.Variable();
+                    return node;
+            }
+            throw new Exception("Expression error");
+        }
+
+        private object BoolTerm()
+        {
+            var node = BoolFactor();
+            while (curr_token.status == TokenType.ISEQUAL)
+            {
+                var token = curr_token;
+                switch (curr_token.status)
+                {
+                    case TokenType.ISEQUAL:
+                        this.GetToken(TokenType.ISEQUAL);
+                        break;
+                        /*
+                    case TokenType.FLOAT_DIV:
+                        this.GetToken(TokenType.FLOAT_DIV);
+                        break;*/
+                }
+                node = MakeBoolOperation(node, token, Factor());
+            }
+            return node;
+        }
+
+        public object BoolExpress()
+        {
+            var node = BoolTerm();
+            while (curr_token.status == TokenType.AND)
+            {
+                var token = curr_token;
+                switch (curr_token.status)
+                {
+                    case TokenType.AND:
+                        GetToken(TokenType.AND);
+                        break;
+                }
+                node = MakeBoolOperation(node, token, Term());
+            }
+            return node;
+        }
+
+        private object MakeNumOperation(object node_1, Token token, object node_2)
         {
             object result = null;
             if (node_1.GetType().Equals(typeof(Real)) || node_2.GetType().Equals(typeof(Real)))
@@ -105,6 +167,11 @@ namespace Basic_IPT.Core
                 result = new BinOP(node_1, token, node_2);
             }
             return result;
+        }
+        private object MakeBoolOperation(object node_1, Token token, object node_2)
+        {
+            
+            return new BoolOP(node_1, token, node_2);
         }
         private void GetToken(TokenType type)
         {

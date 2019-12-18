@@ -41,6 +41,17 @@ namespace Basic_IPT.Core
             var typed_node = (Program)node;
             this.Visit(typed_node.block);
         }
+        public object Visit_IFState(object node)
+        {
+            var typed_node = (IFState)node;
+            foreach(var if_case in typed_node.cases)
+            {
+                if ((bool)Visit(if_case.condition)) return if_case.execute;
+            }
+
+            return null;
+
+        }
         public void Visit_Block(object node)
         {
             var typed_node = (Block)node;
@@ -102,25 +113,29 @@ namespace Basic_IPT.Core
                 case TokenType.DIV:
                     return (float)left / (float)right;
             }
-            throw new Exception("Visit_BinOP method error");
+            throw new Exception("Visit_FloatOP method error");
         }
         public bool Visit_BoolOP(object node)
         {
-            var typed_node = (BinOP)node;
+            var typed_node = (BoolOP)node;
             switch (typed_node.op.status)
             {
                 case TokenType.ISEQUAL:
                     return this.Visit(typed_node.left) == this.Visit(typed_node.right);
+
                 case TokenType.ISLESS:
                     return this.Visit(typed_node.left) < this.Visit(typed_node.right);
+
                 case TokenType.ISMORE:
                     return this.Visit(typed_node.left) > this.Visit(typed_node.right);
+
                 case TokenType.ISLESSOREQUAL:
                     return this.Visit(typed_node.left) <= this.Visit(typed_node.right);
+
                 case TokenType.ISMOREOREQUAL:
                     return this.Visit(typed_node.left) >= this.Visit(typed_node.right);
             }
-            throw new Exception("Visit_BinOP method error");
+            throw new Exception("Visit_BoolOP method error");
         }
         public void Visit_Compound(object node)
         {

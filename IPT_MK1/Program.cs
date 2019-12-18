@@ -7,15 +7,15 @@ namespace IPT_MK1
     {
         static void Main(string[] args)
         {
-            string pascal_1 = @"PROGRAM Part10
-BEGIN
-                                    BEGIN
-
+            string pascal_1 = @"
+result := 0
+IF 1=1 THEN 4 
+ELSEIF 1=2 THEN 6
+ENDIF
                                          number := 2
                                          a := number
                                          b := 10 + (23 / 1.5)
-                                   END
-                                END.";
+";
             string pascal_2 = @"BEGIN
                                     BEGIN
                                          number := 2
@@ -27,8 +27,10 @@ BEGIN
             var parser = new Parser(lexer);
             var ipt = new Interpreter(parser);
             var result = ipt.Process();
-            foreach(var item in ipt.GLOBAL_SCOPE)
+            foreach (var item in ipt.GLOBAL_SCOPE)
                 Console.WriteLine(item.Key + ":" + item.Value);
+
+            Console.WriteLine(result);
             Console.ReadKey();
         }
     }
