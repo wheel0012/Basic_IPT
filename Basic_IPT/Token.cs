@@ -30,8 +30,11 @@ namespace Basic_IPT.Core
 
                 {TokenType.REAL.ToString(), new Token(TokenType.REAL, TokenType.REAL.ToString()) },
 
-                {TokenType.VAR.ToString(), new Token(TokenType.VAR, TokenType.VAR.ToString()) }
+                {TokenType.VAR.ToString(), new Token(TokenType.VAR, TokenType.VAR.ToString()) },
 
+
+                {TokenType.TRUE.ToString(), new Token(TokenType.TRUE, TokenType.TRUE.ToString()) },
+                {TokenType.FALSE.ToString(), new Token(TokenType.FALSE, TokenType.FALSE.ToString()) }
 
             };
         }
@@ -84,7 +87,10 @@ namespace Basic_IPT.Core
         ISNOT,
 
         AND,
-        OR
+        OR,
+
+        TRUE,
+        FALSE
     }
     public class Token
     {

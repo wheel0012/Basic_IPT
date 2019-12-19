@@ -24,7 +24,7 @@ namespace Basic_IPT.Core
             this.GetToken(TokenType.IF);
             var condition = BoolExpress();
             this.GetToken(TokenType.THEN);
-            var execute = Express();
+            var execute = Statement();
             cases.Add(new IFCase(condition, execute));
             while(curr_token.status != TokenType.ENDIF)
             {
@@ -34,12 +34,13 @@ namespace Basic_IPT.Core
                         this.GetToken(TokenType.ELSEIF);
                         var elifCondition = BoolExpress();
                         this.GetToken(TokenType.THEN);
-                        var elifResult = Express();
+                        var elifResult = Statement();
                         cases.Add(new IFCase(elifCondition, elifResult));
                         break;
                     case TokenType.ELSE:
-                        var elseResult = Express();
-                        cases.Add(new IFCase(new BoolOP(true, new Token(TokenType.ISEQUAL, "="),true) , elseResult));
+                        this.GetToken(TokenType.ELSE);
+                        var elseResult = Statement();
+                        cases.Add(new IFCase(new BoolNode(Lexer.keywords["TRUE"]) , elseResult));
                         break;
                 }
                 GetToken(TokenType.EOL);
@@ -79,12 +80,20 @@ namespace Basic_IPT.Core
                 case TokenType.IF:
                     result = this.IFStatement();
                     break;
-
+                case TokenType.RETURN:
+                    result = this.ReturnValueStatement();
+                    break;
                 default:
                     result = this.Empty();
                     break;
             }
             return result;
+        }
+        private ReturnValue ReturnValueStatement()
+        {
+            this.GetToken(TokenType.RETURN);
+            var result = Express();
+            return new ReturnValue(result);
         }
         private Assign AssignmentStatement()
         {

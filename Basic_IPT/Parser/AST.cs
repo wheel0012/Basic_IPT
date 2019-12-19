@@ -118,14 +118,22 @@ namespace Basic_IPT.Core
     }
     public class Assign : AST
     {
-        public object left;
+        public readonly object left;
         public Token token;
-        public object right;
+        public readonly object right;
         public Assign(object left, Token token, object right)
         {
             this.left = left;
             this.token = token;
             this.right = right;
+        }
+    }
+    public class ReturnValue : AST
+    {
+        public readonly object node;
+        public ReturnValue(object node)
+        {
+            this.node = node;
         }
     }
     public class IFState : AST

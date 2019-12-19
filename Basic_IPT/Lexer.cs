@@ -14,7 +14,7 @@ namespace Basic_IPT.Core
         private char code_char;
         private int line;
         private int pos;
-        static Dictionary<string, Token> keywords = TokenTool.RegistToken();
+        public readonly static Dictionary<string, Token> keywords = TokenTool.RegistToken();
             
         public Lexer(string code)
         {

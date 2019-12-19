@@ -24,7 +24,7 @@ namespace Basic_IPT.Core
         public Interpreter(Parser parser)
         {
             this.parser= parser;
-            this.GLOBAL_SCOPE = new Dictionary<string, object>();
+            this.GLOBAL_SCOPE = new Dictionary<string, object>() { { "Result", null } };
         }
         public int Visit_Num(object node)
         {
@@ -34,6 +34,11 @@ namespace Basic_IPT.Core
         public float Visit_Real(object node)
         {
             var typed_node = (Real)node;
+            return typed_node.value;
+        }
+        public bool Visit_BoolNode(object node)
+        {
+            var typed_node = (BoolNode)node;
             return typed_node.value;
         }
         public void Visit_Program(object node)
@@ -46,7 +51,8 @@ namespace Basic_IPT.Core
             var typed_node = (IFState)node;
             foreach(var if_case in typed_node.cases)
             {
-                if ((bool)Visit(if_case.condition)) return if_case.execute;
+                if ((bool)Visit(if_case.condition))
+                    return Visit(if_case.execute);
             }
 
             return null;
@@ -165,6 +171,22 @@ namespace Basic_IPT.Core
                 return var;
             }
             else throw new Exception("Undefinded variable name");
+        }
+        public void Visit_ReturnValue(object node)
+        {
+            var typed_node = (ReturnValue)node;
+            if(typed_node.node.GetType().IsEquivalentTo(typeof(Num)))
+            {
+                GLOBAL_SCOPE["Result"] = ((Num)typed_node.node).value;
+            }
+            else if (typed_node.node.GetType().IsEquivalentTo(typeof(Real)))
+            {
+                GLOBAL_SCOPE["Result"] = ((Real)typed_node.node).value;
+            }
+            else if (typed_node.node.GetType().IsEquivalentTo(typeof(BoolNode)))
+            {
+                GLOBAL_SCOPE["Result"] = ((BoolNode)typed_node.node).value;
+            }
         }
         public object Process()
         {

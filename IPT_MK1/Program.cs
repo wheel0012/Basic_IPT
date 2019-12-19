@@ -9,8 +9,9 @@ namespace IPT_MK1
         {
             string pascal_1 = @"
 result := 0
-IF 1=1 THEN 4 
-ELSEIF 1=2 THEN 6
+IF 1=2 THEN RETURN 4 
+ELSEIF 1=2 THEN RETURN 6
+ELSE RETURN 7
 ENDIF
                                          number := 2
                                          a := number
